@@ -1,0 +1,14 @@
+version: '3'
+services:
+  spark:
+    image: jupyter/pyspark-notebook
+    container_name: pyspark-notebook
+    ports:
+      - "8888:8888"
+      - "4040-4080:4040-4080"
+    volumes:
+      - ./notebooks:/home/jovyan/work/notebooks/
+      - ./exported-models:/home/jovyan/mleap_python_model_export/
+    environment:
+            #  - JAVA_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
+      - SPARK_OPTS=--driver-java-options=-Xms1024M --driver-java-options=-Xmx15360M --driver-java-options=-Dlog4j.logLevel=info
