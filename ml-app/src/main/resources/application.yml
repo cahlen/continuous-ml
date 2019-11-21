@@ -1,0 +1,6 @@
+#mleap:
+#  model:
+#    config: ./src/main/resources/models/bundle.json
+
+mlapp:
+  model-path: ./src/main/resources/models

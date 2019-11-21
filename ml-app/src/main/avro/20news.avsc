@@ -1,0 +1,9 @@
+{
+    "name": "NewsFeatures",
+    "namespace": "io.enfuse.java.ml.mlapp.domain",
+    "type": "record",
+    "fields" : [
+        {"name": "text", "type": "string"},
+        {"name": "topic", "type": "string"}
+    ]
+}

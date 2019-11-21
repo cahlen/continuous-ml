@@ -1,8 +1,33 @@
 version: '3'
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24
+
 services:
+  dns:
+    image: coredns/coredns:1.2.0
+    command: -conf /etc/coredns/Corefile
+    container_name: dns
+    networks:
+      default:
+        ipv4_address: 172.19.0.2
+        aliases: [ns1.localhost]
+    ports:
+      - "5300:53/udp"
+    volumes:
+      - ./docker/dns:/etc/coredns
+
   spark:
     image: jupyter/pyspark-notebook
+    depends_on: [dns]
     container_name: pyspark-notebook
+    dns: [172.19.0.2]
+    networks:
+      default:
+        aliases: [pyspark.localhost]
     ports:
       - "8888:8888"
       - "4040-4080:4040-4080"
@@ -12,3 +37,19 @@ services:
     environment:
             #  - JAVA_OPTS=-Xmx12g -Xms12g -XX:MaxPermSize=1024m
       - SPARK_OPTS=--driver-java-options=-Xms1024M --driver-java-options=-Xmx15360M --driver-java-options=-Dlog4j.logLevel=info
+
+  kafka:
+    image: landoop/fast-data-dev:latest
+    depends_on: [dns]
+    dns: [172.19.0.2]
+    environment:
+      - ADV_HOST=kafka.localhost
+      - SAMPLEDATA=0
+    networks:
+      default:
+        aliases: [kafka.localhost]
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+      - "3030:3030"
+      - "8081:8081" 

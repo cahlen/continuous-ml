@@ -1,0 +1,13 @@
+{
+  "name": "Tokenizer_9095333096e5",
+  "shape": {
+    "inputs": [{
+      "port": "input",
+      "name": "text"
+    }],
+    "outputs": [{
+      "port": "output",
+      "name": "words"
+    }]
+  }
+}

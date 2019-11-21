@@ -1,0 +1,13 @@
+{
+  "name": "StringIndexer_db1ef9922f5c",
+  "shape": {
+    "inputs": [{
+      "port": "input",
+      "name": "topic"
+    }],
+    "outputs": [{
+      "port": "output",
+      "name": "label"
+    }]
+  }
+}
